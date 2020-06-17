@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 
 // 単眼カメラの映像を左右に分割してステレオ表示するクラス
 [RequireComponent(typeof(Camera))]
@@ -23,8 +26,20 @@ public class StereoCameraManager : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(SetAufoFocusFixed());
         // シェーダのパラメータを更新
         UpdateStatus();
+    }
+
+    // バッドノウハウ
+    // ARCameraManagerのAutoFocus:Fixedがちゃんと動いてないので、ハック
+    // ARCameraManager側のFocusModeはAutoに設定しておくこと
+    IEnumerator SetAufoFocusFixed()
+    {
+        // 1フレームでも,0.1fでもだめ
+        yield return new WaitForSeconds(3);
+        GetComponent<ARCameraManager>().focusMode = CameraFocusMode.Fixed;
+        yield return null;
     }
 
     // ステレオ表示パラメータに合わせてシェーダのパラメータを更新する
