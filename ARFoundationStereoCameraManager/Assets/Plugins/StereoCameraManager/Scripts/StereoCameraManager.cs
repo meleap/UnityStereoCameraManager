@@ -10,11 +10,11 @@ public class StereoCameraManager : MonoBehaviour
     // ステレオ表示用パラメータ
     [Header("Stereo Camera")]
     [Tooltip("瞳孔間距離[mm]")]
-    public float ipdMilli = 64; // 瞳孔間距離[mm]
+    public float ipdMilli = 55; // 瞳孔間距離[mm]
     [Tooltip("高さの中心位置0~1")]
     public float centerY = 0.5f; // 高さの中心位置[0 1]
     [Tooltip("単眼カメラ映像の拡大率")]
-    public float magScale = 0.8f; // 表示領域の拡大率
+    public float magScale = 0.61f; // 表示領域の拡大率
 
     private Material _mat; // OnRender Imageで使用する単眼画像をステレオ描画するマテリアル
 
