@@ -1,0 +1,8 @@
+{
+    "name": "com.meleap.unity.xr.hado.stereocameramanager",
+    "displayName": "StereoCameraManager",
+    "description": "Stereo Camera for ARFoundation",
+    "version": "1.0.0",
+    "unity": "2019.4",
+    "dependencies": {}
+}
