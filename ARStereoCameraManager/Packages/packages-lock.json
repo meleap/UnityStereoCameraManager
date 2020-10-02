@@ -1,5 +1,14 @@
 {
   "dependencies": {
+    "com.ptc.vuforia.engine": {
+      "version": "8.5.9",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
@@ -77,7 +86,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.subsystemregistration": {
-      "version": "1.0.5",
+      "version": "1.0.6",
       "depth": 2,
       "source": "registry",
       "dependencies": {},
@@ -119,38 +128,49 @@
       }
     },
     "com.unity.xr.arfoundation": {
-      "version": "2.1.8",
+      "version": "4.0.8",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.xr.legacyinputhelpers": "2.1.1",
-        "com.unity.xr.arsubsystems": "2.1.2"
+        "com.unity.xr.arsubsystems": "4.0.8",
+        "com.unity.xr.management": "3.2.13"
       },
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.arkit": {
-      "version": "2.2.0-preview.6",
+      "version": "4.0.8",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.xr.arsubsystems": "2.2.0-preview.6"
+        "com.unity.xr.arsubsystems": "4.0.8",
+        "com.unity.xr.management": "3.2.13"
       },
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.arsubsystems": {
-      "version": "2.2.0-preview.6",
+      "version": "4.0.8",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.subsystemregistration": "1.0.5"
+        "com.unity.subsystemregistration": "1.0.6"
       },
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.legacyinputhelpers": {
       "version": "2.1.4",
-      "depth": 0,
+      "depth": 2,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.xr.management": {
+      "version": "3.2.13",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.xr.legacyinputhelpers": "2.1.2",
+        "com.unity.subsystemregistration": "1.0.6"
+      },
       "url": "https://packages.unity.com"
     },
     "nuget.mono-cecil": {
