@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using Hado.XR;
 
 // this was used on https://gamedevbill.com, but originally taken from https://cyangamedev.wordpress.com/2020/06/22/urp-post-processing/
 
@@ -19,6 +20,7 @@ public class URPBlit : ScriptableRendererFeature
         public Material blitMaterial = null;
         public int blitShaderPassIndex = 0;
         public FilterMode filterMode { get; set; }
+        public BlitSettings settings { get; set; }
 
         private RenderTargetIdentifier source { get; set; }
         private RenderTargetHandle destination { get; set; }
@@ -26,17 +28,25 @@ public class URPBlit : ScriptableRendererFeature
         RenderTargetHandle m_TemporaryColorTexture;
         string m_ProfilerTag;
 
-        public BlitPass(RenderPassEvent renderPassEvent, Material blitMaterial, int blitShaderPassIndex, string tag)
+        public BlitPass(BlitSettings settings, string tag)
         {
-            this.renderPassEvent = renderPassEvent;
-            this.blitMaterial = blitMaterial;
-            this.blitShaderPassIndex = blitShaderPassIndex;
+            this.settings = settings;
             m_ProfilerTag = tag;
             m_TemporaryColorTexture.Init("_TemporaryColorTexture");
         }
 
         public void Setup(RenderTargetIdentifier source, RenderTargetHandle destination)
         {
+            float screenWidthMilli = PhysicalScreenInfo.GetScreenWidthMilli();
+            float halfIpdRatio = settings.ipdMilli * 0.5f / screenWidthMilli;
+            float rightCenterX = 0.5f + halfIpdRatio;
+            float leftCenterX = 0.5f - halfIpdRatio;
+
+            settings.blitMaterial.SetFloat("_LeftCenterX", leftCenterX);
+            settings.blitMaterial.SetFloat("_RightCenterX", rightCenterX);
+            settings.blitMaterial.SetFloat("_CenterY", settings.centerY);
+            settings.blitMaterial.SetFloat("_MagScale", settings.magScale);
+
             this.source = source;
             this.destination = destination;
         }
@@ -53,12 +63,12 @@ public class URPBlit : ScriptableRendererFeature
             if (destination == RenderTargetHandle.CameraTarget)
             {
                 cmd.GetTemporaryRT(m_TemporaryColorTexture.id, opaqueDesc, filterMode);
-                Blit(cmd, source, m_TemporaryColorTexture.Identifier(), blitMaterial, blitShaderPassIndex);
+                Blit(cmd, source, m_TemporaryColorTexture.Identifier(), settings.blitMaterial, settings.blitMaterialPassIndex);
                 Blit(cmd, m_TemporaryColorTexture.Identifier(), source);
             }
             else
             {
-                Blit(cmd, source, destination.Identifier(), blitMaterial, blitShaderPassIndex);
+                Blit(cmd, source, destination.Identifier(), settings.blitMaterial, settings.blitMaterialPassIndex);
             }
 
             context.ExecuteCommandBuffer(cmd);
@@ -79,6 +89,9 @@ public class URPBlit : ScriptableRendererFeature
 
         public Material blitMaterial = null;
         public int blitMaterialPassIndex = 0;
+        public float ipdMilli = 55;
+        public float centerY = 0.5f;
+        public float magScale = 0.61f;
         public Target destination = Target.Color;
         public string textureId = "_BlitPassTexture";
     }
@@ -98,7 +111,7 @@ public class URPBlit : ScriptableRendererFeature
     {
         var passIndex = settings.blitMaterial != null ? settings.blitMaterial.passCount - 1 : 1;
         settings.blitMaterialPassIndex = Mathf.Clamp(settings.blitMaterialPassIndex, -1, passIndex);
-        blitPass = new BlitPass(settings.Event, settings.blitMaterial, settings.blitMaterialPassIndex, name);
+        blitPass = new BlitPass(settings, name);
         m_RenderTextureHandle.Init(settings.textureId);
     }
 

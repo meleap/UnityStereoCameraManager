@@ -55,6 +55,9 @@ MonoBehaviour:
     Event: 550
     blitMaterial: {fileID: 2100000, guid: ac7fe1b77a0ee42109196f7f2b69c5b0, type: 2}
     blitMaterialPassIndex: 0
+    ipdMilli: 55
+    centerY: 0.5
+    magScale: 0.61
     destination: 0
     textureId: _BlitPassTexture
 --- !u!114 &5507259332588042557
