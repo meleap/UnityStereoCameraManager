@@ -1,8 +1,8 @@
 {
-    "name": "com.meleap.stereocameramanager",
-    "displayName": "StereoCameraManager",
-    "description": "Stereo Camera Manager",
-    "version": "1.0.2",
+    "name": "com.meleap.unity.stereocameramanager",
+    "displayName": "UnityStereoCameraManager",
+    "description": "Unity Stereo Camera Manager",
+    "version": "1.1.0",
     "unity": "2019.4",
     "dependencies": {}
 }
