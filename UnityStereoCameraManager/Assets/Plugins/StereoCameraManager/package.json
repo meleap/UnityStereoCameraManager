@@ -1,8 +1,14 @@
 {
-    "name": "com.meleap.unity.stereocameramanager",
-    "displayName": "UnityStereoCameraManager",
+    "name": "@meleap/unitystereocameramanager",
+    "displayName": "Unity Stereo Camera Manager",
     "description": "Unity Stereo Camera Manager",
     "version": "1.1.0",
     "unity": "2019.4",
+    "author": "meleap inc.",
+    "license": "MIT",
+    "publishConfig": {
+        "access": "restricted",
+        "registry": "https://npm.pkg.github.com/"
+    },
     "dependencies": {}
 }
