@@ -8,7 +8,7 @@ namespace Hado.XR
         // ピクセル単位からmm単位に変換する
         public static float PixToMilliMeter(float pix)
         {
-            return pix / Screen.dpi * 25.4f;
+            return pix / DPI * 25.4f;
         }
 
         // スクリーン幅をmm単位で取得する
@@ -21,6 +21,21 @@ namespace Hado.XR
         public static float GetScreenHeightMilli()
         {
             return PixToMilliMeter(Screen.height);
+        }
+
+        public static float DPI
+        {
+            get
+            {
+                if (SystemInfo.deviceModel == "iPhone13,3")
+                {
+                    return 460;
+                }
+                else
+                {
+                    return 326;
+                }
+            }
         }
     }
 }
