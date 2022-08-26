@@ -5,9 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Examples/ARFoundation-URP/ARFoundationSample.unity
-    guid: b9f8086cdd3744fb08d70b2e93d3f63d
+  - enabled: 1
+    path: Assets/Examples/ARFoundation-URP/ARFoundatioinURP.unity
+    guid: 2b9854119ad98456582096f79bfdc81a
   m_configObjects:
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 0fc4691b6a42e4f63887ad6fdd027ca2,
       type: 2}
