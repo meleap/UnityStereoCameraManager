@@ -5,12 +5,10 @@ using UnityEngine.Rendering.Universal;
 public class StereoCameraRenderPass : ScriptableRenderPass
 {
     private const string CommandBufferName = nameof(StereoCameraRenderPass);
-    private readonly int RenderTargetTexId = Shader.PropertyToID("_RenderTargetTex");
+    private static readonly int RenderTargetTexId = Shader.PropertyToID("_RenderTargetTex");
     
     private RenderTargetIdentifier _currentRenderTarget;
     private readonly Material _material;
-    
-    private int _downSample = 10;
     
     public StereoCameraRenderPass(Material material, RenderPassEvent renderPassEvent)
     {

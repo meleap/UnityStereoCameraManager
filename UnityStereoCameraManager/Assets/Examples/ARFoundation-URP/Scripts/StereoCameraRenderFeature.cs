@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-public class StereoCameeraRenderFeature : ScriptableRendererFeature
+public class StereoCameraRenderFeature : ScriptableRendererFeature
 {
     [SerializeField] private Shader stereoShader;
     [SerializeField] private RenderPassEvent renderPassEvent;
