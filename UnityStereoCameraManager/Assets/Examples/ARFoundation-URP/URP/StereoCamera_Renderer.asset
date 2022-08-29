@@ -73,6 +73,9 @@ MonoBehaviour:
   m_Active: 1
   stereoShader: {fileID: 4800000, guid: 6eac39c4255144a3495e92f2fa0ead4d, type: 3}
   renderPassEvent: 350
+  ipdMilli: 55
+  centerY: 0.5
+  magScale: 0.585
 --- !u!114 &6197965439557034087
 MonoBehaviour:
   m_ObjectHideFlags: 0

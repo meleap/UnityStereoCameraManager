@@ -2,45 +2,49 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-public class StereoCameraRenderPass : ScriptableRenderPass
+namespace Hado.XR
 {
-    private const string CommandBufferName = nameof(StereoCameraRenderPass);
-    private static readonly int RenderTargetTexId = Shader.PropertyToID("_RenderTargetTex");
-    
-    private RenderTargetIdentifier _currentRenderTarget;
-    private readonly Material _material;
-    
-    public StereoCameraRenderPass(Material material, RenderPassEvent renderPassEvent)
+    public class StereoCameraRenderPass : ScriptableRenderPass
     {
-        _material = material;
-        this.renderPassEvent = renderPassEvent;
-    }
+        private const string CommandBufferName = nameof(StereoCameraRenderPass);
+        private static readonly int RenderTargetTexId = Shader.PropertyToID("_RenderTargetTex");
     
-    public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
-    {
-        var commandBuffer = CommandBufferPool.Get(CommandBufferName);
-        var cameraData = renderingData.cameraData;
-        var w = cameraData.camera.scaledPixelWidth;
-        var h = cameraData.camera.scaledPixelHeight;
+        private RenderTargetIdentifier _currentRenderTarget;
+        private readonly Material _material;
+    
+        public StereoCameraRenderPass(Material material, RenderPassEvent renderPassEvent)
+        {
+            _material = material;
+            this.renderPassEvent = renderPassEvent;
+        }
+    
+        public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
+        {
+            var commandBuffer = CommandBufferPool.Get(CommandBufferName);
+            var cameraData = renderingData.cameraData;
+            var w = cameraData.camera.scaledPixelWidth;
+            var h = cameraData.camera.scaledPixelHeight;
 
-        // RenderTextureを生成
-        commandBuffer.GetTemporaryRT(RenderTargetTexId, w, h, 0, FilterMode.Bilinear);
+            // RenderTextureを生成
+            commandBuffer.GetTemporaryRT(RenderTargetTexId, w, h, 0, FilterMode.Bilinear);
         
-        //ApplyShader
-        commandBuffer.Blit(_currentRenderTarget, RenderTargetTexId, _material);
+            //ApplyShader
+            commandBuffer.Blit(_currentRenderTarget, RenderTargetTexId, _material);
         
-        // Back RenderTarget
-        commandBuffer.Blit(RenderTargetTexId, _currentRenderTarget);
-        commandBuffer.ReleaseTemporaryRT(RenderTargetTexId);
+            // Back RenderTarget
+            commandBuffer.Blit(RenderTargetTexId, _currentRenderTarget);
+            commandBuffer.ReleaseTemporaryRT(RenderTargetTexId);
 
-        context.ExecuteCommandBuffer(commandBuffer);
-        context.Submit();
+            context.ExecuteCommandBuffer(commandBuffer);
+            context.Submit();
         
-        CommandBufferPool.Release(commandBuffer);
-    }
+            CommandBufferPool.Release(commandBuffer);
+        }
 
-    public void SetParam(RenderTargetIdentifier renderTarget)
-    {
-        _currentRenderTarget = renderTarget;
+        public void SetParam(RenderTargetIdentifier renderTarget)
+        {
+            _currentRenderTarget = renderTarget;
+        }
     }
 }
+
