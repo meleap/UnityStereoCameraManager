@@ -1,12 +1,16 @@
 {
     "name": "StereoCameraManager",
-    "references": [],
-    "optionalUnityReferences": [],
+    "rootNamespace": "",
+    "references": [
+        "GUID:31da7ad3aecf747d2a2f6ce738f045be"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": []
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

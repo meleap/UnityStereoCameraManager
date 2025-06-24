@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Hado.XR.Examples
@@ -17,7 +15,7 @@ namespace Hado.XR.Examples
         {
             DPI.text = $"DPI: {Screen.dpi:F4}";
             
-            ScreenWidth.text = $"Screen: {Screen.width}px, {PhysicalScreenInfo.GetScreenWidthMilli()}milli";
+            ScreenWidth.text = $"Screen: {Screen.width}px";
 
             DeviceModel.text = $"Model: {SystemInfo.deviceModel}";
         }

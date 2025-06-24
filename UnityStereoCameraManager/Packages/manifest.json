@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.doyasu24.devicemodels": "https://github.com/doyasu24/UnityDeviceModels.git?path=Assets/Plugins/DeviceModels#0.1.1",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
     "com.unity.ads": "4.4.2",

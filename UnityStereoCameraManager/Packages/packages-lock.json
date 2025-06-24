@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.doyasu24.devicemodels": {
+      "version": "https://github.com/doyasu24/UnityDeviceModels.git?path=Assets/Plugins/DeviceModels#0.1.1",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "fd89c68c3239b52b971f5c1e4374ace11328d3f6"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

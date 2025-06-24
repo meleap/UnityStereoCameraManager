@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Hado.XR
 {
@@ -7,13 +6,13 @@ namespace Hado.XR
     [RequireComponent(typeof(Camera))]
     public class StereoCameraManager : MonoBehaviour
     {
-        // ステレオ表示用パラメータ
-        [Header("Stereo Camera")]
-        [Tooltip("瞳孔間距離[mm]")]
+        private static readonly int LeftCenterX = Shader.PropertyToID("_LeftCenterX");
+        private static readonly int RightCenterX = Shader.PropertyToID("_RightCenterX");
+        private static readonly int CenterY = Shader.PropertyToID("_CenterY");
+        private static readonly int MagScale = Shader.PropertyToID("_MagScale");
+
         public float ipdMilli = 55; // 瞳孔間距離[mm]
-        [Tooltip("高さの中心位置0~1")]
         public float centerY = 0.5f; // 高さの中心位置[0 1]
-        [Tooltip("単眼カメラ映像の拡大率")]
         public float magScale = 0.585f; // 表示領域の拡大率
 
         private Material _mat; // OnRender Imageで使用する単眼画像をステレオ描画するマテリアル
@@ -33,14 +32,14 @@ namespace Hado.XR
         // ステレオ表示パラメータに合わせてシェーダのパラメータを更新する
         public void UpdateStatus()
         {
-            float screenWidthMilli = PhysicalScreenInfo.GetScreenWidthMilli();
-            float halfIpdRatio = ipdMilli * 0.5f / screenWidthMilli;
-            float rightCenterX = 0.5f + halfIpdRatio;
-            float leftCenterX = 0.5f - halfIpdRatio;
-            _mat.SetFloat("_LeftCenterX", leftCenterX);
-            _mat.SetFloat("_RightCenterX", rightCenterX);
-            _mat.SetFloat("_CenterY", centerY);
-            _mat.SetFloat("_MagScale", magScale);
+            var screenWidthMilli = GetScreenWidthMilli();
+            var halfIpdRatio = ipdMilli * 0.5f / screenWidthMilli;
+            var rightCenterX = 0.5f + halfIpdRatio;
+            var leftCenterX = 0.5f - halfIpdRatio;
+            _mat.SetFloat(LeftCenterX, leftCenterX);
+            _mat.SetFloat(RightCenterX, rightCenterX);
+            _mat.SetFloat(CenterY, centerY);
+            _mat.SetFloat(MagScale, magScale);
         }
 
         // 描画した画像にXR/StereoShaderを適用する
@@ -48,6 +47,14 @@ namespace Hado.XR
         {
             Graphics.Blit(src, dest, _mat);
         }
+        
+        private static float GetScreenWidthMilli()
+        {
+            // 326はiPhoneSEのPPIで、25.4は1インチあたりのmm数
+            // 16eはPPIが460ですが、MasScaleも変更する必要がある関係上、ここで分岐せず、StereoCameraSettingsで値を調整しています
+            return Screen.width / 326f * 25.4f;
+        }
+
     }
 
 }
