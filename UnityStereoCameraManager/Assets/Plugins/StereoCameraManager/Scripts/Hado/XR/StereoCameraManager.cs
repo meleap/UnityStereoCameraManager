@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TypeC.URP.URPStereoCameraManager.Scripts;
+using UnityEngine;
 
 namespace Hado.XR
 {
@@ -10,10 +11,6 @@ namespace Hado.XR
         private static readonly int RightCenterX = Shader.PropertyToID("_RightCenterX");
         private static readonly int CenterY = Shader.PropertyToID("_CenterY");
         private static readonly int MagScale = Shader.PropertyToID("_MagScale");
-
-        public float ipdMilli = 55; // 瞳孔間距離[mm]
-        public float centerY = 0.5f; // 高さの中心位置[0 1]
-        public float magScale = 0.585f; // 表示領域の拡大率
 
         private Material _mat; // OnRender Imageで使用する単眼画像をステレオ描画するマテリアル
 
@@ -32,14 +29,16 @@ namespace Hado.XR
         // ステレオ表示パラメータに合わせてシェーダのパラメータを更新する
         public void UpdateStatus()
         {
+            var settings = StereoCameraSettingsProvider.Get();
+
             var screenWidthMilli = GetScreenWidthMilli();
-            var halfIpdRatio = ipdMilli * 0.5f / screenWidthMilli;
+            var halfIpdRatio = settings.IpdMilli * 0.5f / screenWidthMilli;
             var rightCenterX = 0.5f + halfIpdRatio;
             var leftCenterX = 0.5f - halfIpdRatio;
             _mat.SetFloat(LeftCenterX, leftCenterX);
             _mat.SetFloat(RightCenterX, rightCenterX);
-            _mat.SetFloat(CenterY, centerY);
-            _mat.SetFloat(MagScale, magScale);
+            _mat.SetFloat(CenterY, settings.CenterY);
+            _mat.SetFloat(MagScale, settings.MagScale);
         }
 
         // 描画した画像にXR/StereoShaderを適用する
